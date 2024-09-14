@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+	<html lang="en">
+	
+		<head>
+			<link rel= "stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap">
+			<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Forum&display=swap">
+			<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caudex:wght@400;700&display=swap">
+			<link rel= "stylesheet" type= "text/css" href= "bmiCSS.css"> 
+			<title> BMI Calculator </title>
+		</head>
+		
+	<body>
+	
+		<section class = "section1" >
+		
+			<div class = "logo-and-title" >
+			
+				<img src ="logo8.png" alt="HTML Image" class = "overlay-logo" >
+				<h2> NutriLife </h2>
+					
+				<nav class = "list" >
+					<a href = "index.html" class = "list-item" style = "padding-left: 770px;" > Homepage </a>
+					<a href="infopage.html" class="list-item"> Health Info For You </a>
+					<a href="#" class = "list-item-currentPage" style = "color: #92695D;" > BMI Calculator </a>
+				</nav>
+				
+			</div>
+		</section>
+		
+		<div class = "div1" >
+			<img src ="bmi.jpg" alt="HTML Image" class = "imageBack" >
+			
+			<section class="sectionBackImage">
+				
+				<h1> What is BMI? </h1>
+				
+				<p class = "p2" style = "font-size: 18px;" > Body Mass Index (BMI) is a value that is 
+				calculated using a person's height and weight. It is frequently used as a broad indicator to 
+				determine whether a person is at a healthy body weight relative to their height. </p>
+				
+				<hr>
+				
+				<h1> BMI Calculator </h1>
+				
+					<div class= "bmi-calculator" >
+		
+						<div class= "input-box"> 
+							<label for= "height" style = "color: #A37A6F;" ><b> Enter your height (cm): </b></label>
+							<input type= "number" id= "height" placeholder= "Height in cm">
+							<div id= "height-error" class= "error-message"> </div>
+						</div>
+
+						<div class= "input-box">
+							<label for = "weight" style = "color: #A37A6F;" ><b> Enter your weight (kg): </b></label>
+							<input type= "number" id= "weight" placeholder= "Weight in kg" >
+							<div id= "weight-error" class= "error-message" ></div>
+						</div>
+
+						<button onclick = "calculateBMI()" > Calculate BMI </button>
+
+						<div class= "result" id= "result" ></div>
+						<div class= "category" id= "category" ></div>
+			
+					</div>
+					
+					<script>
+						function calculateBMI() {
+							// Get input values
+							const height = document.getElementById('height').value;
+							const weight = document.getElementById('weight').value;
+					
+							// Error elements
+							const heightError = document.getElementById('height-error');
+							const weightError = document.getElementById('weight-error');
+							const resultElement = document.getElementById('result');
+							const categoryElement = document.getElementById('category');
+					
+							// Clear previous errors and result
+							heightError.textContent = '';
+							weightError.textContent = '';
+							resultElement.textContent = '';
+							categoryElement.textContent = '';
+
+							// Validate inputs
+							if (!height || height <= 0 || isNaN(height)) {
+								heightError.textContent = 'Please enter a valid height in cm.';
+								return;
+							}
+							
+							if (!weight || weight <= 0 || isNaN(weight)) {
+								weightError.textContent = 'Please enter a valid weight in kg.';
+								return;
+							}
+					
+							// Calculate BMI
+							const heightInMeters = height / 100;
+							const bmi = (weight / (heightInMeters * heightInMeters)).toFixed(2);
+							
+							// Display the result
+							resultElement.textContent = `Your BMI is ${bmi}`;
+
+							// Determine BMI category and apply CSS class
+							categoryElement.className = ''; // Clear any previous class
+							let category = '';
+
+							if (bmi < 18.5) {
+								category = 'Underweight';
+								categoryElement.classList.add('underweight');
+							} 
+				
+							else if (bmi >= 18.5 && bmi < 24.9) {
+								category = 'Normal weight';
+								categoryElement.classList.add('normal-weight');
+							} 
+				
+							else if (bmi >= 25 && bmi < 29.9) {
+								category = 'Overweight';
+								categoryElement.classList.add('overweight');
+							} 
+				
+							else if (bmi >= 30) {
+								category = 'Obese';
+								categoryElement.classList.add('obese');
+							}
+
+							// Display the BMI category
+							categoryElement.textContent = `Category: ${category}`;
+						}
+					</script>
+			</section>
+		</div>
+	</body>
+	</html>
